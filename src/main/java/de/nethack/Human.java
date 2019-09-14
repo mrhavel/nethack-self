@@ -65,6 +65,7 @@ public class Human {
 
     /**
      * Kollisionsüberprüfung
+     *
      * @param p - Punkt eines Hindernisses
      * @return
      */

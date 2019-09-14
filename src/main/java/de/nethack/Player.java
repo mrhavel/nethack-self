@@ -4,6 +4,31 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ * Humans kill Players kill Humans kill Players kill
+ *
+ */
 public class Player extends Human {
 
     private JPanel upperRef;

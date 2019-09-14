@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ *
+ */
 public class HumanUtil {
 
-
-    private List<String> names = new ArrayList();
+    private List<String> names = new ArrayList<>();
 
     public HumanUtil() {
         names.add("Dieter");
@@ -20,7 +22,6 @@ public class HumanUtil {
     }
 
     public String getName(int i) {
-
         try {
             return names.get(i);
         } catch (Exception e) {

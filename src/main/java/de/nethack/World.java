@@ -2,20 +2,17 @@ package de.nethack;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.Timer;
 import java.util.*;
 
-public class World extends JPanel {
+/**
+ *
+ */
+public class World
+        extends JPanel {
 
     private JFrame frm = new JFrame();
-
-    private int factor = 8;
-
-    private int x = 100;
-    private int y = 100;
 
     private long time = 150;
     private int screenX = 640;
@@ -30,9 +27,15 @@ public class World extends JPanel {
         }
     }
 
+    /**
+     * Spielwelt
+     *
+     * @param g
+     */
     @Override
-    public void paint(Graphics g) { // Display Humans
+    public void paint(Graphics g) {
         super.paint(g);
+
         for (Human h : humans) {
             h.refresh();
 
@@ -41,6 +44,7 @@ public class World extends JPanel {
                     continue;
 
                 if (h.collide(hu.asPoint())) {
+                    frm.getContentPane().add(new Arena(h, hu, this));
                     break;
                 }
             }
@@ -49,10 +53,14 @@ public class World extends JPanel {
                     new Random().nextInt(screenX - 1),
                     new Random().nextInt(screenY - 1)
             );
+
             g.drawString(h.getIcon(), h.getX(), h.getY());
         }
     }
 
+    /**
+     * Vorbereitung des JFrames
+     */
     public void gameScreen() {
         frm.setSize(screenX, screenY);
         frm.setVisible(true);
@@ -62,10 +70,6 @@ public class World extends JPanel {
         logic();
     }
 
-    public static void main(String[] arg) {
-        World gs = new World();
-        gs.gameScreen();
-    }
 
     public void logic() {
         JPanel upperRef = this;
@@ -79,8 +83,18 @@ public class World extends JPanel {
 
     }
 
-    public void addPlayer() {
+    /**
+     * Call nach der Arena
+     */
+    public void warIsOver() {
+        frm.getContentPane().removeAll();
+        frm.getContentPane().add(this);
+    }
 
+
+    public static void main(String[] arg) {
+        World gs = new World();
+        gs.gameScreen();
     }
 
 }
