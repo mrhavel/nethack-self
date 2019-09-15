@@ -1,10 +1,17 @@
 package de.nethack;
 
+import de.nethack.beans.Human;
+import de.nethack.exp.CollisionException;
+import de.nethack.ui.Arena;
+import de.nethack.ui.Drawable;
+import de.nethack.ui.PaintedWorld;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.*;
+import java.util.TimerTask;
 
 /**
  *
@@ -18,13 +25,31 @@ public class World
     private int screenX = 640;
     private int screenY = 480;
 
+    private Drawable currentDrawable = new PaintedWorld();
+
+    private Timer t = new Timer();
+
+    private JPanel currentPanel;
+
     private HumanUtil util = new HumanUtil();
     private List<Human> humans = new ArrayList<>();
 
     public World() {
+        // Nur eine Demo Menge von Humans
         for (int i = 0; i != 20; i++) {
-            humans.add(util.createNew(screenX, screenY));
+            getHumans().add(util.createNew(getScreenX(), getScreenY()));
         }
+        frm.setSize(getScreenX(), getScreenY());
+        frm.setVisible(true);
+        frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frm.setResizable(false);
+        frm.getContentPane().add(this);
+        currentPanel = this;
+        logic();
+    }
+
+    public static void main(String[] arg) {
+        new World();
     }
 
     /**
@@ -36,65 +61,42 @@ public class World
     public void paint(Graphics g) {
         super.paint(g);
 
-        for (Human h : humans) {
-            h.refresh();
-
-            for (Human hu : humans) {
-                if (hu.equals(h))
-                    continue;
-
-                if (h.collide(hu.asPoint())) {
-                    frm.getContentPane().add(new Arena(h, hu, this));
-                    break;
-                }
-            }
-
-            h.moveTo(
-                    new Random().nextInt(screenX - 1),
-                    new Random().nextInt(screenY - 1)
-            );
-
-            g.drawString(h.getIcon(), h.getX(), h.getY());
+        try {
+            currentDrawable.draw(this, g);
+        } catch (CollisionException exp) {
+            currentDrawable = new Arena(exp.getAttacker(), exp.getDefend(), this);
         }
     }
 
-    /**
-     * Vorbereitung des JFrames
-     */
-    public void gameScreen() {
-        frm.setSize(screenX, screenY);
-        frm.setVisible(true);
-        frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frm.setResizable(false);
-        frm.getContentPane().add(this);
-        logic();
-    }
-
-
-    public void logic() {
-        JPanel upperRef = this;
-        Timer t = new Timer();
+    private void logic() {
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                upperRef.repaint();
+                try {
+                    currentPanel.repaint();
+                } catch (Exception e) {
+                    System.out.println("WHOOPS " + e.getMessage());
+                }
             }
         }, time, 15);
-
     }
 
     /**
      * Call nach der Arena
      */
     public void warIsOver() {
-        frm.getContentPane().removeAll();
-        frm.getContentPane().add(this);
+        currentDrawable = new PaintedWorld();
     }
 
-
-    public static void main(String[] arg) {
-        World gs = new World();
-        gs.gameScreen();
+    public List<Human> getHumans() {
+        return humans;
     }
 
+    public int getScreenX() {
+        return screenX;
+    }
+
+    public int getScreenY() {
+        return screenY;
+    }
 }

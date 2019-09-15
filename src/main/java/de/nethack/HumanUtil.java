@@ -1,5 +1,7 @@
 package de.nethack;
 
+import de.nethack.beans.Human;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,9 +11,10 @@ import java.util.Random;
  */
 public class HumanUtil {
 
-    private List<String> names = new ArrayList<>();
+    private List<String> names;
 
     public HumanUtil() {
+        names = new ArrayList<>();
         names.add("Dieter");
         names.add("Irmgard");
         names.add("Schorsch");
@@ -25,7 +28,7 @@ public class HumanUtil {
         try {
             return names.get(i);
         } catch (Exception e) {
-            return "Günther";
+            return "Chantalle";
         }
     }
 
